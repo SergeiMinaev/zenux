@@ -3,8 +3,51 @@
 <head>
   <meta charset='utf-8'>
 </head>
-<body style='display:flex;flex-direction:column;align-items:center;height:100vh;background-color:#cecfe1;color:#010000;'>
-  <h2>Проект на реконструкции, но скоро все материалы снова будут доступны.</h2>
-  <p>Подсказка: пока сайт не работает, можно воспользоваться кэшем Google.</p>
+<body>
+  <style>
+    html {
+      --svg__tux: url('/static/tux.svg');
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      display:grid;
+      grid-template-areas: 'main';
+      height:100vh;
+      color:#2b2b2b;
+      font-size: 14px;
+      background-color: #fff8dd;
+    }
+    #tux {
+      grid-area: main;
+      height:100vh;
+      -webkit-mask-image: var(--svg__tux);
+      -webkit-mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: right;
+      mask-image: var(--svg__tux);
+      mask-size: contain;
+      mask-repeat: no-repeat;
+      mask-position: right;
+      background-color: #b9acf9;
+      opacity: .5;
+      z-index: -1;
+    }
+    #content {
+      grid-area: main;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin: 30px;
+      font-size: 1.5em;
+    }
+  </style>
+  <div id=content>
+    <h2>Проект на реконструкции, но скоро все материалы снова будут доступны.</h2>
+    <p>Подсказка: пока сайт не работает, можно воспользоваться кэшем Google.</p>
+  </div>
+  <div  id=tux>
 </body>
 </html>
