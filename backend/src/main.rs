@@ -1,45 +1,54 @@
-use futures_lite::future;
 use std::collections::HashMap;
-use saras::server;
-use saras::http;
+use futures_lite::{future, Future, FutureExt};
 use urlmatch::urlmatch;
+use saras::listener;
+use saras::http;
+use saras::http::Resp;
 
 
-struct Path {
+
+struct Path<Fut>
+where
+    Fut: Future<Output = Resp>,
+{
     p: &'static str,
-    f: fn(&HashMap<String, &str>) -> http::Resp,
+    f: fn(HashMap<String, String>) -> Fut,
 }
 
-fn url_dispatcher(url: &str) -> http::Resp {
+async fn url_dispatcher(url: String) -> Resp {
     let routes = vec![
-        Path {p: &"/", f: home},
-        //Path {p: &"/catalogue/:ctg/:id", f: catalogue},
-        //Path {p: &"/profile/:username", f: profile},
-        //Path {p: &"/profile", f: profile},
+        Path {p: &"/profile", f: |args| profile(args).boxed()},
+        Path {p: &"/catalogue/:ctg/:id", f: |args| catalogue(args).boxed()},
+        Path {p: &"/json", f: |args| get_json(args).boxed()},
     ];
     for route in routes.iter() {
-        let r = urlmatch(url, route.p);
+        let r = urlmatch(&url, route.p);
         if r.is_matched {
-            return (route.f)(&r.keys);
+            return (route.f)(r.keys).await;
         }
     }
-    http::Resp{code: 404, text: "Not found".to_string()}
+    http::text_resp(404, "Not found".to_string())
 }
 
-fn home(args: &HashMap<String, &str>) -> http::Resp {
-    let text = format!("home(), args: {:?}", args);
-    http::Resp{ code: 200, text: text }
-}
-fn catalogue(args: &HashMap<String, &str>) -> http::Resp {
+async fn catalogue(args: HashMap<String, String>) -> Resp {
     let text = format!("catalogue(), args: {:?}", args);
-    http::Resp{ code: 200, text: text }
+    http::text_resp(200, text)
 }
-fn profile(args: &HashMap<String, &str>) -> http::Resp {
+async fn profile(args: HashMap<String, String>) -> Resp {
     let text = format!("profile(), args: {:?}", args);
-    http::Resp{ code: 200, text: text }
+    http::text_resp(200, text)
 }
+async fn get_json(_args: HashMap<String, String>) -> Resp {
+    let json = format!(r#"
+        {{
+            "name": "Adam",
+            "age": "{}"
+        }}
+    "#, i64::MIN);
+    http::json_resp(200, json)
+}
+
 
 fn main() {
-    let _ = future::block_on(server::run(url_dispatcher));
+    let _ = future::block_on(listener::run(url_dispatcher));
 }
-
