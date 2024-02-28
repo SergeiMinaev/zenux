@@ -1,0 +1,16 @@
+[project]
+name = "zenux"
+version = "0.1.0"
+description = "Virtual env for zenux project."
+authors = [
+    {name = "Sergei Minaev", email = "i@zenux.ru"},
+]
+dependencies = [
+    "ws-watcher @ file:///work/ws_watcher",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "Private"}
+
+[tool.pdm]
+distribution = false

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'/>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	{% IF DEV %}
+	<script type="module" src="/dev_static/ext/ws_livereload/livereload.js"></script>
+	<script type="module" src="/dev_static/js/core/core.js"></script>
+	{% ENDIF %}
+	{% IF PROD %}
+	<script type="module" src="/static/js/core.min.js"></script>
+	{% ENDIF %}
+	<link rel='stylesheet' href='/static/style/core.css'>
+</head>
+<body>
+	<div id='app'></div>
+
+	<template id='t-app'>
+		<div id='router-view'></div>
+		<c-home></c-home>
+	</template>
+
+	<#inc-templates>
+</body>
+</html>

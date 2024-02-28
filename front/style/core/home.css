@@ -1,0 +1,36 @@
+c-home {
+	--svg__tux: url('/static/img/tux.svg');
+
+	padding: 0;
+	display:grid;
+	grid-template-areas: 'main';
+	height:100vh;
+	color:#2b2b2b;
+	font-size: 14px;
+
+	#tux {
+		grid-area: main;
+		height:100vh;
+		-webkit-mask-image: var(--svg__tux);
+		-webkit-mask-size: contain;
+		-webkit-mask-repeat: no-repeat;
+		-webkit-mask-position: right;
+		mask-image: var(--svg__tux);
+		mask-size: contain;
+		mask-repeat: no-repeat;
+		mask-position: right;
+		background-color: #b9acf9;
+		opacity: .5;
+		z-index: -1;
+	}
+	#content {
+		grid-area: main;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		margin: 30px;
+		font-size: 1.5em;
+	}
+}

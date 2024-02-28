@@ -1,0 +1,22 @@
+/target
+saras.pid
+*.toml
+elt.sock
+local-files
+db/migrations/
+static/js/
+static/style/
+front/ext/
+
+# vim
+*.swp
+*.swn
+*.swo
+
+# py
+__pycache__/
+.pdm.toml
+.pdm-python
+venv
+
+.env

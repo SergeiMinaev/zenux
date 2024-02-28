@@ -1,0 +1,31 @@
+[package]
+name = "zenux"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "zenux"
+
+[dependencies]
+argon2 = "0.5"
+async-lock = "3.3"
+isahc = { version = "1.7", features = ["default"] }
+futures-lite = "1"
+urlmatch = {git = "https://github.com/SergeiMinaev/urlmatch"}
+lpsql= {git = "https://github.com/SergeiMinaev/lpsql.rs"}
+#lpsql= {path = "/work/lpsql"}
+once_cell = "1.19"
+saras = {git = "https://github.com/SergeiMinaev/saras.rs"}
+#saras = {path = "/work/saras"}
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "0.8"
+validator = { version = "0.16", features = ["derive"] }
+#img-shrink = {path = "/work/img-shrink"}
+chrono = "0.4"
+
+[profile.dev]
+strip = true
+
+[profile.release]
+strip = true

@@ -1,0 +1,47 @@
+# Конфиг для запуска проекта через сессию Tmuxp ( https://github.com/tmux-python/tmuxp ).
+# Для загрузки сессии Vim, должен быть установлен плагин https://github.com/mhinz/vim-startify ,
+# а сессия должна быть сохранена с названием zenux.
+# Путь до каталога проекта должен быть записан в $ZENUX_HOME.
+# Проект запускается этой командой:
+# tmuxp load $ZENUX_HOME/tmuxp-session.yaml
+
+
+session_name: zenux
+start_directory: $ZENUX_HOME
+windows:
+
+- window_name: srvApp
+  panes:
+    - shell_command:
+      - ./manage/app-srv.sh
+
+- window_name: codeF
+  focus: true
+  panes:
+    - shell_command:
+      - vim
+      - :SLoad zenuxFront
+
+- window_name: codeB
+  panes:
+    - shell_command:
+      - cd back
+      - vim
+      - :SLoad zenuxBack
+
+- window_name: manage
+
+- window_name: sql
+  panes:
+    - shell_command:
+      - psql -U postgres zenux
+
+- window_name: ssh
+  panes:
+    - shell_command:
+      - sh ~/ssh-ihc.sh
+
+- window_name: srvWatcher
+  panes:
+    - shell_command:
+      - ./manage/watcher.sh
